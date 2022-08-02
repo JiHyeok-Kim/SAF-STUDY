@@ -1,0 +1,80 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <string>
+#include <cstring>
+using namespace std;
+
+struct Node
+{
+	int x, y;
+	int lev;
+};
+
+int map[101][101];
+int dx[8] = {-3,-3,-2,+2,+3,+3,+2,-2};
+int dy[8] = {+2,-2,+3,+3,+2,-2,-3,-3};
+
+queue<Node>q;
+
+int min_value = 9999;
+int blueLev = 0;
+
+int main()
+{
+	int h, w;
+	cin >> h >> w;
+	int start_x, start_y, blue_x, blue_y;
+	cin >> start_x >> start_y;
+	cin >> blue_x >> blue_y;
+
+	map[start_x][start_y] = 1;
+	map[blue_x][blue_y] = 3;
+
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i ++ )
+	{
+		int small_x, small_y;
+		cin >> small_x>>small_y;
+		map[small_x][small_y] = 2;
+	}
+
+	q.push({ start_x,start_y,0 });
+
+	while (!q.empty())
+	{
+		Node now = q.front();
+		q.pop();
+
+		for (int i = 0; i < 8; i++)
+		{
+			int nx = now.x + dx[i];
+			int ny = now.y + dy[i];
+
+			if (nx < 0 || ny < 0 || nx >= h || ny >= w)continue;
+			if (map[nx][ny] == 1)continue;
+			if (map[nx][ny] == 2)continue;
+			if (map[nx][ny] == 3)
+			{
+				blueLev = now.lev + 1;
+				if (blueLev < min_value)
+				{
+					min_value = blueLev;
+				}
+			}
+			map[nx][ny] = 1;
+
+			q.push({ nx,ny,now.lev + 1 });
+		}
+
+
+	}
+
+	if (blueLev == 0)min_value = -1;
+
+	cout << min_value;
+
+
+}

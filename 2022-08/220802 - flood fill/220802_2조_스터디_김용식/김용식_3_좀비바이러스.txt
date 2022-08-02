@@ -1,0 +1,73 @@
+
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+    static StringTokenizer st;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int w, h, x, y; 
+    static int[][] map; 
+    static int[][] visited;
+    static Queue<Zombie>q = new LinkedList<>(); 
+    static int ans; 
+    static int zcnt = 0; 
+
+    static class Zombie {
+        int x;
+        int y;
+
+        Zombie(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }        
+    }
+
+    static void bfs() {
+        // 3. 큐가 빌때까지 돌리기
+        while(!q.isEmpty()) {
+            Zombie now = q.poll(); 
+            ans = visited[now.x][now.y]; // 정답은 마지막 방문한 visited 의 누적 기록
+            zcnt--; // 방문했다면 얘는 치료
+            int[] xdir = {0, 0, 1, -1};
+            int[] ydir = {1, -1, 0, 0}; 
+            for(int i = 0; i < 4; i++) {
+                int nextx = now.x + xdir[i]; // 다음 x 방향 
+                int nexty = now.y + ydir[i]; // 다음 y 방향
+                if(nextx < 0 || nexty < 0 || nextx >= h || nexty >= w) continue; // 범위체크
+                if(map[nextx][nexty] != 1) continue; // 좀비가 아니면 pass 
+                if(visited[nextx][nexty] != 0) continue; // 방문했다면 pass
+                visited[nextx][nexty] = visited[now.x][now.y]+ 1;  
+                q.add(new Zombie(nextx, nexty)); 
+            }
+        }
+    }
+
+    public static void main(String[]args) throws IOException {
+        st = new StringTokenizer(br.readLine());
+        w = Integer.parseInt(st.nextToken()); // 7
+        h = Integer.parseInt(st.nextToken()); // 8 
+        map = new int[h][w]; 
+        visited = new int[h][w]; 
+        for(int i = 0; i < h; i++) {
+            String str = br.readLine(); 
+            for(int j = 0; j < w; j++) {
+                map[i][j] = str.charAt(j) - '0'; 
+                if (map[i][j] == 1) 
+                    zcnt++; 
+            }
+        }
+        st = new StringTokenizer(br.readLine());
+        y = Integer.parseInt(st.nextToken()) -1; // 좌표 맞게 받기 위해 -1 (0부터 시작) 
+        x = Integer.parseInt(st.nextToken()) -1; // 좌표 맞게 받기 위해 -1 (0부터 시작)
+
+        // 1. 큐에 시작 노드 넣기
+        q.add(new Zombie(x, y));
+        // 2. 첫번째 노드 방문 기록 
+        visited[x][y] = 3; // 3초후에 터짐
+        bfs(); 
+        System.out.println(ans);
+        System.out.println(zcnt);
+    }
+}
+

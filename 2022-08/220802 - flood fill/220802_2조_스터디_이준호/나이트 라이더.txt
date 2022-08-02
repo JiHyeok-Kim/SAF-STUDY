@@ -1,0 +1,64 @@
+#include <iostream>
+#include <queue>
+#include <string>
+#include <vector>
+using namespace std;
+
+struct Node {
+	int y, x;
+	int lev;
+};
+
+int map[100][100];
+int used[100][100];
+queue<Node> q;
+
+int directY[8] = { -1,-2,-2,-1,1,2,2,1 };
+int directX[8] = { -2,-1,1,2,-2,-1,1,2 };
+
+int main() {
+
+	int a, b;
+	cin >> a >> b;
+	int knightY, knightX;
+	int targetY, targetX;
+
+	cin >> knightY >> knightX;
+	cin >> targetY >> targetX;
+
+	map[knightY - 1][knightX - 1] = 1;
+	map[targetY - 1][targetX - 1] = 2;
+	q.push({ knightY - 1, knightX - 1, 0 });
+	int lastLev = 0;
+
+	
+
+	while (!q.empty()) {
+		Node now = q.front();
+		q.pop();
+		used[knightY - 1][knightX - 1] = 1;
+		
+		//q에 들어있는 now의 정보로 출력하는게 깔끔하다.
+		if (map[now.y][now.x] == 2) {
+			cout << now.lev;
+			break;
+		}
+		
+		//ny, nx는  for문 안에서만 돌아가게해라
+		for (int i = 0; i < 8; i++) {
+			int ny = now.y + directY[i];
+			int nx = now.x + directX[i];
+
+			if (ny < 0 || nx < 0 || ny >= a || nx >= b) continue;
+			
+			//used 이용해서 한번 간 곳 안가게 훨씬 깔끔하다.
+			if (used[ny][nx] == 1) continue;
+			used[ny][nx] = 1;
+
+			q.push({ ny, nx, now.lev + 1 });	
+		}
+
+	}
+
+	return 0;
+}

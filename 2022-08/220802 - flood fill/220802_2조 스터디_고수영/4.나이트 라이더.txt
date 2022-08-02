@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <string>
+#include <cstring>
+using namespace std;
+
+struct Node
+{
+	int x, y;
+	int lev;
+};
+
+int map[101][101];
+int dx[8] = { -2,-2,-1,+1,+2,+2,+1,-1 };
+int dy[8] = { -1,+1,+2,+2,+1,-1,-2,-2 };
+queue<Node>q;
+
+int main()
+{
+	int h, w;
+	cin >> h >> w;
+	int start_x,start_y, result_x, result_y;
+	cin >> start_x >> start_y >> result_x >> result_y;
+	map[result_x - 1][result_y - 1] = 2;
+	map[start_x - 1][start_y - 1] = 1;
+
+
+	q.push({ start_x - 1,start_y - 1 ,0});
+
+	int resultLev = 0;
+
+	while (!q.empty())
+	{
+		Node now = q.front();
+		q.pop();
+
+		for (int i = 0; i < 8; i++)
+		{
+			int nx = now.x + dx[i];
+			int ny = now.y + dy[i];
+
+			if (nx < 0 || ny < 0 || nx >= h || ny >= w)continue;
+			if (map[nx][ny] == 1)continue;
+			if (nx == result_x - 1 && ny == result_y - 1)
+			{
+				resultLev = now.lev + 1;
+
+			}
+			map[nx][ny] = 1;
+			q.push({ nx,ny,now.lev + 1 });
+
+			
+
+
+
+		}
+	}
+	cout << resultLev;
+
+
+}

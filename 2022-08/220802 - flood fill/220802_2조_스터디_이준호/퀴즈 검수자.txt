@@ -1,0 +1,70 @@
+#include <iostream>
+#include <queue>
+#include <string>
+#include <vector>
+using namespace std;
+
+struct Node {
+	int y, x;
+	int lev;
+};
+queue<Node> q;
+int map[100][100];
+int used[100][100];
+
+int directY[8] = { -2,-3,-3,-2,2,3,3,2 };
+int directX[8] = { -3,-2,2,3,-3,-2,2,3 };
+
+int main() {
+	int h, w, r, c ,chaY,chaX, n;
+	int jjol[50][2];
+
+	cin >> h >> w;
+	cin >> r >> c;
+	cin >> chaY >> chaX;
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < 2; j++) {
+			cin >> jjol[i][j];
+		}
+	}
+
+	q.push({ r,c,0 });
+
+	// used에 쫄 위치를 접근할 수 없게 미리 입력한다.
+	used[r][c] = 1;
+	for (int i = 0; i < n; i++) {
+		int a, b;
+		a = jjol[i][0];
+		b = jjol[i][1];
+		used[a][b] = 1;
+	}
+	
+	int flag = 0;
+	int res;
+	while (!q.empty()) {
+		Node now = q.front();
+		q.pop();
+		if (now.y == chaY && now.x == chaX) {
+			flag = 1;
+			res = now.lev;
+			break;
+		}
+
+		for (int i = 0; i < 8; i++) {
+			int ny = now.y + directY[i];
+			int nx = now.x + directX[i];
+			if (ny < 0 || nx < 0 || ny >= h || nx >= w) continue;
+
+			if (used[ny][nx] == 1) continue;
+			used[ny][nx] = 1;
+			q.push({ ny, nx, now.lev + 1 });
+		}
+	}
+
+	if (flag == 1) cout << res;
+	else cout << -1;
+
+	return 0;
+}

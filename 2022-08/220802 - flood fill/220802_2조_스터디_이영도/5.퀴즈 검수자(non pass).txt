@@ -1,0 +1,76 @@
+// 5.퀴즈 검수자 (Non Pass)
+#include<iostream>
+#include<cstring>
+#include<string>
+#include<string.h>
+#include <vector>
+#include <stack>
+#include <queue>
+
+using namespace std;
+
+struct N {
+    int y, x;
+    int lev;
+};
+
+queue<N> q;
+int diry[] = { -2, -3, 2, 3, -3, -2, 3, 2 };
+int dirx[] = { -3, -2, -3, -2, 2, 3, 2, 3 };
+int map[101][101];
+
+int main() {
+    int h, w, ry, rx, by, bx, n = 0, flag = 0;
+    cin >> h >> w >> ry >> rx >> by >> bx >> n;
+
+    int lastLev = 0; // 마지막 레벨 
+    int arr[101][2]; // 졸병 자리
+
+    for (int i = 0; i < n; i++) { // 졸병 넣기
+        cin >> arr[i][0];
+        cin >> arr[i][1];
+        map[arr[i][0]][arr[i][1]] = 1;
+    }
+
+    map[by][bx] = 2; // 파랑이 위치 지정
+
+    map[ry][rx] = 1; // 빨강이 위치 지정
+    q.push({ ry, rx, 0 }); // 빨강이 시작 위치 지정
+
+    while (!q.empty()) {
+        N now = q.front(); // q에 넣고
+        q.pop(); // 넣은 거 q에선 삭제
+
+        for (int i = 0; i < 8; i++) { // 8방향 가기
+            int ny = now.y + diry[i]; // y축
+            int nx = now.x + dirx[i]; // x축
+
+            // map 벗어나면 무시
+            if (ny < 0 || nx < 0 ||
+                ny >= h || nx >= w) continue;
+            // 이미 갔던 곳과 졸병 위치 무시
+            if (map[ny][nx] == 1) continue;
+        
+            map[ny][nx] = 1; // 갔던 곳 체크
+            // 다음 갈 곳 q에 push
+            q.push({ ny, nx, now.lev + 1 });
+
+            // 마지막 경로 저장하기
+            lastLev = now.lev + 1;
+
+            // 파랑이 있는 곳 도착시 깃발 들기
+            if (map[ny][nx] == 2) { 
+                flag = 1;
+                break;
+            }
+
+        }
+    }
+
+    if (flag == 1) { // 잡은 경우
+        cout << lastLev << endl;
+    }
+    else cout << "-1" << endl; // 잡을 수 없는 경우
+
+    return 0;
+}

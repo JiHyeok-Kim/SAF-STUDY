@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <queue>
+using namespace std;
+
+struct Node {
+	int y, x;
+	int lev;
+};
+
+int chess[101][101] = { 0 };
+int h, w;
+int xl, yl;
+int xt, yt;
+int directY[] = { -2,-2,-1,-1,1,1,2,2 };
+int directX[] = { -1,1,-2,2,-2,2,-1,1 };
+queue<Node> q;
+
+int main()
+{
+	cin >> h >> w;
+	cin >> yl >> xl;
+	cin >> yt >> xt;
+	chess[yl - 1][xl - 1] = 1;
+	chess[yt - 1][xt - 1] = 2;
+	q.push({ yl - 1, xl - 1, 1 });
+
+	while (!q.empty()) {
+		Node now = q.front();
+		q.pop();
+
+		for (int i = 0; i < 8; i++) {
+			int ny = now.y + directY[i];
+			int nx = now.x + directX[i];
+			if (ny < 0 || nx < 0 || ny >= h || nx >= w) continue;
+			if (chess[ny][nx] == 1) continue;
+			if (chess[ny][nx] == 2) { cout << now.lev; return 0; }
+
+			chess[ny][nx] = 1;
+			q.push({ ny, nx, now.lev + 1 });
+
+		}
+	}
+
+	return 0;
+}
