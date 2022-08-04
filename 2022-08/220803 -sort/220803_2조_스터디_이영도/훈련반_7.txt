@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	struct Product
+	{
+		char name[5];
+		int size;
+		int price;
+	};
+
+	Product a, b;
+	int avrSize;
+	int avrPrice;
+
+	cin >> a.name >> a.size >> a.price;
+	cin >> b.name >> b.size >> b.price;
+
+	avrSize = (a.size + b.size) / 2;
+	avrPrice = (a.price + b.price) / 2;
+
+	cout << a.name << "," << b.name << endl;
+	cout << "AverageSize=" << avrSize << endl;
+	cout << "AveragePrice=" << avrPrice << endl;
+	
+	return 0;
+}

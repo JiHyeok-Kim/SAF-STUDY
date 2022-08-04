@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int vect[3][4];
+	int t;
+	int x, y;
+	int input;
+
+	t = 1;
+	for (y = 2; y >= 0; y--)
+	{
+		for (x = 3; x >= 0; x--)
+		{
+			vect[y][x] = t;
+			t++;
+		}
+	}
+
+	cin >> input;
+
+	for (x = 0; x < 4; x++)
+	{
+		vect[input - 1][x] = 7;
+	}
+
+	for (y = 0; y < 3; y++)
+	{
+		for (x = 0; x < 4; x++)
+		{
+			cout << vect[y][x] << " ";
+		}
+		cout << endl;
+	}
+	return 0;
+}

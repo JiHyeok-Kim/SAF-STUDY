@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int a, b, c;
+	int x, t;
+
+	cin >> a >> b >> c;
+
+	for (t = 0; t < c; t++)
+	{
+		for (x = a; x < a + b; x++)
+		{
+			cout << x << " ";
+		}
+		cout << endl;
+	}
+
+
+	return 0;
+}

@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	char vect[7] = "APPLET";
+	char input[5];
+	int x, t;
+	int cnt = 0;
+
+	for (x = 0; x < 5; x++)
+	{
+		cin >> input[x];
+
+		for (t = 0; t < 6; t++)
+		{
+			if (vect[t] == input[x])
+			{
+				cnt++;
+			}
+		}
+	}
+
+	cout << cnt << "개 맞추었습니다";
+
+	return 0;
+}

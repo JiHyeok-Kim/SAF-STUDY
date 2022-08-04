@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int vect[2][3];
+	int next[6];
+	int result[2][3];
+
+	int x, y;
+	int t = 0;
+	int temp;
+
+	//1. 입력받기
+	for (y = 0; y < 2; y++)
+	{
+		for (x = 0; x < 3; x++)
+		{
+			cin >> vect[y][x];
+		}
+	}
+
+	//2. 1차원 배열에 옮기기
+	t = 0;
+	for (y = 0; y < 2; y++)
+	{
+		for (x = 0; x < 3; x++)
+		{
+			next[t] = vect[y][x];
+			t++;
+		}
+	}
+
+	//3. 선택정렬
+	for (y = 0; y < 6; y++)
+	{
+		for (x = y + 1; x < 6; x++)
+		{
+			if (next[y] > next[x])
+			{
+				temp = next[y];
+				next[y] = next[x];
+				next[x] = temp;
+			}
+		}
+	}
+
+	//4. 2차원 배열에 옮기기
+	t = 0;
+	for (y = 0; y < 2; y++)
+	{
+		for (x = 0; x < 3; x++)
+		{
+			result[y][x] = next[t];
+			t++;
+		}
+	}
+
+	//5. 출력하기
+	for (y = 0; y < 2; y++)
+	{
+		for (x = 0; x < 3; x++)
+		{
+			cout << result[y][x] << " ";
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
