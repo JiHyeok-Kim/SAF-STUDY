@@ -1,8 +1,16 @@
 #include <iostream>
+#include <string>
+#include <cstring>
+#include <string.h>
+#include <vector>
+#include <queue>
+#include <stack>
+#include <algorithm>
+
 using namespace std;
 
 int T, N, W;
-int map[100000];
+int map[100001];
 
 void slidingWindow() {
 	int start = 0;
