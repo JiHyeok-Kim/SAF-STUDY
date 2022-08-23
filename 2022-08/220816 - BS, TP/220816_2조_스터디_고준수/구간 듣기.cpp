@@ -5,19 +5,32 @@
 #include <algorithm>
 using namespace std;
 
-string input;
-string answer;
-string main_answer;
+int arr[3][4] = {3,2,5,3,7,6,1,6,4,9,2,7 };
+
+int rec(int y,int x,int n)
+{
+	if (x - n < 0)
+	{
+		x += 2;
+	}
+	return arr[y][x - n];
+}
 int main()
 {
-	int a, b, c;
-	cin >> input;
-	cin >> a >> b >> c;
-
-	answer = input.substr(a, b - a + 1);
-	for (int i = 0; i < c; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		main_answer += answer;
+		int x;
+		cin >> x;
+		for (int j = 0; j < 3; j++)
+		{
+			cout <<rec(i, j, x);
+		}
+
+		cout << '\n';
 	}
-	cout << main_answer;
+	
+	
+	
+
+	
 }
