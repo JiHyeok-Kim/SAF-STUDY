@@ -1,0 +1,38 @@
+// input
+/*
+매개변수	값
+n	5
+arr1	[9, 20, 28, 18, 11]
+arr2	[30, 1, 21, 17, 28]
+출력	["#####","# # #", "### #", "# ##", "#####"]
+*/
+
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <bitset>
+using namespace std;
+
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
+    vector<string> answer;
+    // todo something...
+    
+    for (int i = 0; i < n; ++i) {
+        int a = arr1[i];
+        int b = arr2[i];
+        bitset<20> bit_a(a);
+        bitset<20> bit_b(b);
+        
+        string sum = "";
+        for (int j = n - 1; j >= 0; --j) {
+            if (bit_a[j] == 1 || bit_b[j] == 1) sum += "#";
+            else sum += " ";
+        }
+        
+        answer.push_back(sum);
+    }
+    //
+    return answer;
+}
