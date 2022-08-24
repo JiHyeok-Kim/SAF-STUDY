@@ -1,0 +1,72 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+vector<string> bucketStr1;
+vector<string> bucketStr2;
+vector<string> ret;
+
+void getBinary1(vector<int> arr, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		string str;
+		for (int j = 0; j < n; j++)
+		{
+			str = to_string(arr[i] % 2) + str;
+			arr[i] = arr[i] / 2;
+		}
+		bucketStr1.push_back(str);
+	}
+
+	return;
+}
+
+void getBinary2(vector<int> arr, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		string str;
+		for (int j = 0; j < n; j++)
+		{
+			str = to_string(arr[i] % 2) + str;
+			arr[i] = arr[i] / 2;
+		}
+		bucketStr2.push_back(str);
+	}
+
+	return;
+}
+
+void goMap(int n)
+{
+		for (int i = 0; i < n; i++)
+		{
+			string str;
+			for (int j = 0; j < n; j++)
+			{
+				if (bucketStr1[i][j] == '0' && bucketStr2[i][j] == '0') str = str + ' ';
+				else if (bucketStr1[i][j] == '1' || bucketStr2[i][j] == '1') str = str + '#';
+			}
+			ret.push_back(str);
+		}
+
+	return;
+}
+
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
+    vector<string> answer;
+
+	getBinary1(arr1, n);
+	getBinary2(arr2, n);
+
+	goMap(n);
+
+	for (int i = 0; i < n; i++)
+	{
+		answer.push_back(ret[i]);
+	}
+    
+    return answer;
+}
