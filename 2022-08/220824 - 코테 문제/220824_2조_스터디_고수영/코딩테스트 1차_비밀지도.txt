@@ -1,0 +1,55 @@
+#include <string>
+#include <cstring>
+#include <vector>
+#include <bitset>
+#include <math.h>
+
+using namespace std;
+
+string bs(int n, int x)
+{
+    string s = "";
+    for(int i = n-1; i>=0; i--)
+    {
+        int tmp = pow(2,i);
+        if(x>=tmp) 
+        {
+            s+="1";
+            x-=tmp;
+        }
+        else if (x==0) s+="0";
+        else s+="0";
+    }
+    return s;
+}
+
+
+
+vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
+
+	vector<string> answer(n);
+	for (int i = 0; i < n; i++)
+	{
+		// string s1 = bitset<16>(arr1[i]).to_string();
+		// string s2 = bitset<16>(arr2[i]).to_string();
+		// s1 = s1.substr(16 - n, n);
+		// s2 = s2.substr(16 - n, n);
+        
+        string s1 = bs(n,arr1[i]);
+        string s2 = bs(n,arr2[i]);
+        
+        
+		string ret = "";
+
+		for (int j = 0; j < n; j++)
+		{
+
+			if ((s1[j] == '0') && (s2[j] == '0')) ret += " ";
+			else ret += "#";
+        }
+		answer[i] = { ret };
+
+	}
+	return answer;
+}
+
