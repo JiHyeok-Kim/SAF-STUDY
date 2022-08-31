@@ -13,7 +13,9 @@ vector<core> v;
 int n;
 int map[12][12];
 int coreCnt;
+int externalCore;
 int minVal = 21e8;
+int maxCon;
 
 bool check(int dir, int y, int x) {
 	if (dir == 0) {
@@ -31,7 +33,7 @@ bool check(int dir, int y, int x) {
 			if (map[y][i] != 0) return false;
 		}
 	}
-	else {
+	else if (dir == 3) {
 		for (int i = y + 1; i < n; i++) {
 			if (map[i][x] != 0) return false;
 		}
@@ -61,12 +63,13 @@ int setLine(int dir, int y, int x) {
 			val++;
 		}
 	}
-	else {
+	else if (dir == 3) {
 		for (int i = y + 1; i < n; i++) {
 			map[i][x] = 2;
 			val++;
 		}
 	}
+	else if (dir == 4) val = 0;
 
 	return val;
 }
@@ -82,25 +85,33 @@ void returnLine(int dir, int y, int x) {
 	else if (dir == 2) {
 		for (int i = x + 1; i < n; i++) map[y][i] = 0;
 	}
-	else {
+	else if (dir == 3) {
 		for (int i = y + 1; i < n; i++) map[i][x] = 0;
 	}
-	
+
 	return;
 }
 
-void dfs(int line, int idx) {
+void dfs(int line, int idx, int con) {
 	if (idx == coreCnt) {
-		minVal = min(minVal, line);
+		if (maxCon < con) {
+			maxCon = con;
+			minVal = line;
+		}
+		else if (maxCon == con) {
+			minVal = min(line, minVal);
+		}
 		return;
 	}
 
 	core now = v[idx];
 
-	for (int dir = 0; dir < 4; dir++) {
+	for (int dir = 0; dir < 5; dir++) {
+		int c = 1;
 		if (check(dir, now.y, now.x)) {
+			if (dir == 4) c = 0;
 			int val = setLine(dir, now.y, now.x);
-			dfs(line + val, idx + 1);
+			dfs(line + val, idx + 1, con + c);
 			returnLine(dir, now.y, now.x);
 		}
 	}
@@ -113,20 +124,25 @@ int main() {
 	for (int t = 1; t <= tc; t++) {
 		cin >> n;
 
+		externalCore = 0;
 		coreCnt = 0;
 		minVal = 21e8;
+		maxCon = 0;
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 				cin >> map[i][j];
 				if (map[i][j] == 0) continue;
-				if (i == 0 || j == 0 || i == n - 1 || j == n - 1) continue;
+				if (i == 0 || j == 0 || i == n - 1 || j == n - 1) {
+					externalCore++;
+					continue;
+				}
 				v.push_back({ i,j });
 				coreCnt++;
 			}
 		}
 
-		dfs(0, 0);
+		dfs(0, 0, 0);
 
 		cout << "#" << t << " " << minVal << '\n';
 		while (v.size() > 0) v.pop_back();
