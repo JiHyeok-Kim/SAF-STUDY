@@ -18,15 +18,15 @@ int drY[5] = { 0,-1,0,1,0 };
 int drX[5] = { 0,0,1,0,-1 };
 
 void init() {
-    for (int y = 0; y < 11; y++) {
-        for (int x = 0; x < 11; x++) {
+    for (int y = 1; y < 11; y++) {
+        for (int x = 1; x < 11; x++) {
             map[y][x].clear();
         }
     }
 }
 void setting() {
-    for (int y = 0; y < 11; y++) {
-        for (int x = 0; x < 11; x++) {
+    for (int y = 1; y < 11; y++) {
+        for (int x = 1; x < 11; x++) {
             if (map[y][x].empty()) map[y][x].push_back({ 0,0 });
         }
     }
@@ -40,6 +40,7 @@ qNode getCoor(qNode now, int dr) {
 void setMap(int sy, int sx, int idx, int c, int p) {
     int used[11][11] = { 0 };
     q.push({ sy,sx,0 });
+    map[sy][sx].push_back({ idx,p });
     used[sy][sx] = 1;
 
     while (!q.empty()) {
@@ -86,7 +87,7 @@ int getP(int y1, int x1, int y2, int x2) {
 
 
 int main() {
-    freopen_s(new FILE*, "input.txt", "r", stdin);
+    //freopen_s(new FILE*, "input.txt", "r", stdin);
     cin >> T;
     for (int t = 1; t <= T; t++) {
         init();
@@ -99,18 +100,16 @@ int main() {
         }
         for (int i = 0; i < A; i++) {
             int y, x, c, p;
-            cin >> y >> x >> c >> p;
+            cin >> x >> y >> c >> p;
             setMap(y, x, i + 1, c, p);
         }
         setting();
         int sum = 0;
         qNode Anow = { 1,1 };
         qNode Bnow = { 10,10 };
-        /*if (!map[1][1].empty()) Asum += map[1][1][0].val;
-        if (!map[10][10].empty()) Bsum += map[10][10][0].val;*/
         for (int times = 0; times <= M; times++) {
             sum += getP(Anow.y, Anow.x, Bnow.y, Bnow.x);
-            if (times == M)break;
+            if (times == M) break;
             Anow = getCoor(Anow, Alist[times]);
             Bnow = getCoor(Bnow, Blist[times]);
         }
