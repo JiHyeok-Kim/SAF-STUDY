@@ -1,0 +1,28 @@
+
+#include<iostream>
+
+using namespace std;
+
+int map[100][100], n;
+
+void dfs(int now) {
+	cout << now << " ";
+
+	for (int i = 0; i < n; i++) {
+		if (map[now][i] == 1) dfs(i);
+	}
+}
+
+int main() {
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> map[i][j];
+		}
+	}
+
+	dfs(0);
+
+	return 0;
+}
