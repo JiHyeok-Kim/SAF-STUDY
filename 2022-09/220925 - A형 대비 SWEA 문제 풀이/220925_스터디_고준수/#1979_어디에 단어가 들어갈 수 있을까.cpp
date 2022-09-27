@@ -1,106 +1,18 @@
-#include <iostream>
-#include <string>
-#include <queue>
-#include <vector>
+#define _CRT_SECURE_NO_WARNINGS    // strtok 보안 경고로 인한 컴파일 에러 방지
+#include <stdio.h>
+#include <string.h>    // strtok 함수가 선언된 헤더 파일
 
-using namespace std;
-
-vector<int> v;
-int result = 0;
-int tc_cnt = 1;
 int main()
 {
+    char s1[30] = "The Little Prince";  // 크기가 30인 char형 배열을 선언하고 문자열 할당
 
-	int tc;
-	cin >> tc;
-	for (int testcase=0; testcase < tc; testcase++)
-	{
+    char* ptr = strtok(s1, " ");      // " " 공백 문자를 기준으로 문자열을 자름, 포인터 반환
 
+    while (ptr != NULL)               // 자른 문자열이 나오지 않을 때까지 반복
+    {
+        printf("%s\n", ptr);          // 자른 문자열 출력
+        ptr = strtok(NULL, " ");      // 다음 문자열을 잘라서 포인터를 반환
+    }
 
-		int N;
-		cin >> N;
-
-		int K;
-		cin >> K;
-
-
-		int map[15][15];
-		for (int i = 0; i < N; i++)
-		{
-			for (int j = 0; j < N; j++)
-			{
-				cin >> map[i][j];
-			}
-		}
-
-		int width_cnt = 0;
-		//가로
-		for (int i = 0; i < N; i++)
-		{
-			v.clear();
-			for (int j = 0; j < N; j++)
-			{
-				if (map[i][j] == 0 && width_cnt==0) continue;
-				if (map[i][j] == 0 && width_cnt != 0)
-				{
-					v.push_back(width_cnt);
-					width_cnt = 0;
-				}
-				else if (map[i][j] == 1)
-				{
-					width_cnt++;
-				}
-			}
-			v.push_back(width_cnt);
-			width_cnt = 0;
-			for (int j = 0; j < v.size(); j++)
-			{
-				if (v[j] == K)
-				{
-					result++;
-				}
-			}
-
-		}
-
-
-		//세로
-		int height_cnt = 0;
-		for (int i = 0; i < N; i++)
-		{
-			v.clear();
-			for (int j = 0; j < N; j++)
-			{
-				if (map[j][i] == 0 && height_cnt == 0) continue;
-				if (map[j][i] == 0 && height_cnt != 0)
-				{
-					v.push_back(height_cnt);
-					height_cnt = 0;
-					//height_cnt = 0;
-				}
-				else if (map[j][i] == 1)
-				{
-					height_cnt++;
-				}
-			}
-			v.push_back(height_cnt);
-			height_cnt = 0;
-			for (int j = 0; j < v.size(); j++)
-			{
-				if (v[j] == K)
-				{
-					result++;
-				}
-			}
-
-		}
-
-
-		cout << "#" << tc_cnt << ' ' << result << '\n';
-		result = 0;
-		tc_cnt++;
-
-
-	};
-	return 0;
+    return 0;
 }
