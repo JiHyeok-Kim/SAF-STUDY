@@ -13,10 +13,7 @@ struct Node {
 
 bool cmp(Node t, Node v)
 {
-	if (t.score > v.score) return 1;
-	if (t.score < v.score) return 0;
-
-	return t.idx < v.idx;
+	return t.score > v.score;
 }
 
 int N, K;
@@ -48,7 +45,7 @@ int main()
 		{
 			if (st[i].idx == K)
 			{
-				cout << "#" << tc << " " << score[i / (N/10)] << "\n";
+				cout << "#" << tc << " " << score[i / (N / 10)] << "\n";
 				break;
 			}
 		}
