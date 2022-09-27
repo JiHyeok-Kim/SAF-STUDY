@@ -10,7 +10,7 @@ int ans;
 
 void isValid(int y, int x)
 {
-	int direct[4] = { 0 };
+	int direct[2] = { 0 };
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 1; j <= K; j++)
@@ -19,19 +19,19 @@ void isValid(int y, int x)
 			int dx = x + directX[i] * j;
 			if (dy < 0 || dx < 0 || dy >= N || dx >= N) break;
 			if (map[dy][dx] == 0) break;
-			direct[i]++;
+			direct[i / 2]++;
 		}
 	}
 
-	if ((direct[0] + direct[1]) + 1 == K) ans++;
-	if ((direct[2] + direct[3]) + 1 == K) ans++;
-	
+	if (direct[0] + 1 == K) ans++;
+	if (direct[1] + 1 == K) ans++;
+
 	return;
 }
 
 int main()
 {
-	freopen_s(new FILE*, "input.txt", "r", stdin);
+	//freopen_s(new FILE*, "input.txt", "r", stdin);
 
 	cin.tie(0);
 	cin.tie(0);
@@ -39,12 +39,12 @@ int main()
 
 	int T;
 	cin >> T;
-	
+
 	for (int tc = 1; tc <= T; tc++)
 	{
 		ans = 0;
 		memset(map, 0, sizeof(map));
-		
+
 		cin >> N >> K;
 		for (int y = 0; y < N; y++)
 		{
@@ -62,7 +62,7 @@ int main()
 				isValid(y, x);
 			}
 		}
-		
+
 		ans /= K;
 		cout << "#" << tc << " " << ans << "\n";
 	}
