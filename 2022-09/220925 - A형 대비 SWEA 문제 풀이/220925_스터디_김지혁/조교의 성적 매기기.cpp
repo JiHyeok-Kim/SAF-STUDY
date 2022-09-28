@@ -5,9 +5,6 @@ using namespace std;
 
 struct Node {
 	int idx;
-	int score35;
-	int score45;
-	int score20;
 	int score;
 };
 
@@ -21,8 +18,6 @@ string score[10] = { "A+", "A0", "A-", "B+", "B0", "B-", "C+", "C0", "C-", "D0" 
 
 int main()
 {
-	freopen_s(new FILE*, "input.txt", "r", stdin);
-
 	cin.tie(0);
 	cout.tie(0);
 	ios::sync_with_stdio(false);
@@ -36,8 +31,9 @@ int main()
 		for (int i = 0; i < N; i++)
 		{
 			st[i].idx = i + 1;
-			cin >> st[i].score35 >> st[i].score45 >> st[i].score20;
-			st[i].score = (st[i].score35 * 35 + st[i].score45 * 45 + st[i].score20 * 20);
+			int score35, score45, score20;
+			cin >> score35 >> score45 >> score20;
+			st[i].score = (score35 * 35 + score45 * 45 + score20 * 20);
 		}
 
 		sort(st, st + N, cmp);
