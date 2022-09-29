@@ -1,0 +1,89 @@
+#include <iostream>
+using namespace std;
+int arr[10][10];
+int DAT[10];
+void init() {
+	for (int i = 0; i < 10; i++) {
+		DAT[i] = 0;
+	}
+}
+int box_check() {
+	for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < 3; i++) {
+			for (int row = 0; row < 3; row++) {
+				for (int col = 0; col < 3; col++) {
+					DAT[arr[3 * i + row][3 * j + col]]++;
+				}
+			}
+			for (int i = 1; i < 10; i++) {
+				if (DAT[i] > 1)return  0;
+			}
+			init();
+		}
+	}
+	return 1;
+}
+int row_check() {
+
+	for (int row = 0; row < 9; row++) {
+		for (int col = 0; col < 9; col++) {
+			DAT[arr[row][col]]++;
+
+		}
+		for (int i = 1; i < 10; i++) {
+			if (DAT[i] > 1)return 0;
+		}
+		init();
+
+	}
+	return 1;
+}
+int col_check() {
+	for (int col = 0; col < 9; col++) {
+		for (int row = 0; row < 9; row++) {
+			DAT[arr[row][col]]++;
+
+		}
+		for (int i = 1; i < 10; i++) {
+			if (DAT[i] > 1)return 0;
+		}
+		init();
+
+	}
+	return 1;
+}
+int main()
+{
+	//freopen_s(new FILE*, "input.txt", "r", stdin);
+
+	int T;
+	cin >> T;
+
+	for (int cas = 1; cas <= T; cas++) {
+
+
+		for (int row = 0; row < 9; row++) {
+			for (int col = 0; col < 9; col++) {
+				cin >> arr[row][col];
+			}
+		}
+		init();
+		int a=row_check();
+
+		int b=col_check();
+
+
+		int c=box_check();
+		
+		cout << "#" << cas << " ";
+		if (a == 1 && b == 1 && c == 1) {
+			cout << 1;
+		}
+		else {
+			cout << 0;
+		}
+		cout << "\n";
+
+
+	}
+}
