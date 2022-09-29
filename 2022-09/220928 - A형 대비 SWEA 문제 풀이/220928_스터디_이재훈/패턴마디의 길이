@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+	//freopen_s(new FILE*, "input.txt", "r", stdin);
+	int T;
+	cin >> T;
+
+	for (int cas = 1; cas <= T; cas++) {
+		cout << "#" << cas<<" ";
+
+		string s;
+		cin >> s;
+
+		string target = s.substr(0, 3);
+
+
+		int t = s.find(target,1);
+		cout << t <<"\n";
+	}
+}
