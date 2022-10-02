@@ -1,0 +1,34 @@
+#include <iostream>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	ios::sync_with_stdio(false);
+	
+	//freopen_s(new FILE*, "input.txt", "r", stdin);
+
+	int T;
+	cin >> T;
+
+	for (int cas = 1; cas <= T; cas++) {
+
+		cout << "#" << cas << " ";
+		int P, Q, R, S, W;
+		cin >> P >> Q >> R >> S >> W;
+
+		int A = P * W;
+		int B = 0;
+
+		if (W <= R) {
+			B = Q;
+		}
+		else {
+			B = Q + (W - R) * S;
+		}
+
+		int result = min(A, B);
+		cout << result << "\n";
+	}
+
+
+}
