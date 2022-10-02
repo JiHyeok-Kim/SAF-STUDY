@@ -1,0 +1,39 @@
+#include <iostream>
+#include<algorithm>
+using namespace std;
+int DAT[100001];
+void init() {
+	for (int i = 0; i < 100001; i++) {
+		DAT[i] = 0;
+	}
+}
+int main()
+{
+	ios::sync_with_stdio(false);
+	
+	//freopen_s(new FILE*, "input.txt", "r", stdin);
+	cin.tie();
+	cout.tie();
+	int T;
+	cin >> T;
+
+	for (int cas = 1; cas <= T; cas++) {
+
+		int N;
+		cin >> N;
+		init();
+		int mini =99999999999;
+
+		for (int i = 0; i < N; i++) {
+			int distance;
+			cin >> distance;
+			distance = abs(distance);
+			DAT[distance]++;
+			mini = min(distance, mini);
+		}
+		
+
+		cout << "#" << cas << " "<<mini<<" "<<DAT[mini]<<"\n";
+	}
+
+}
