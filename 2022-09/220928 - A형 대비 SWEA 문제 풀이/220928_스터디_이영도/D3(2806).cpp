@@ -11,29 +11,31 @@
 
 using namespace std;
 
-int N, ret;
-int arr[11];
+int N, ret, arr[11];
 
-bool isValid(int cnt) {
-	for (int i = 0; i < cnt; i++) {
-		if (arr[cnt] == arr[i] ||
-			abs(arr[cnt] - arr[i]) == abs(cnt - i)) {
+bool isValid(int cur) { // 유효성 검증 함수
+
+	for (int past = 0; past < cur; past++) {
+		if (arr[cur] == arr[past] ||
+			abs(arr[cur] - arr[past]) == abs(cur - past)) {
 			return false;
 		}
 	}
+
 	return true;
 }
 
-void dfs(int cnt) {
-	if (cnt == N) {
+void dfs(int cur) { // DFS
+	
+	if (cur == N) {
 		ret++;
 		return;
 	}
 
-	for (int i = 0; i < N; i++) {
-		arr[cnt] = i;
-		if (isValid(cnt)) {
-			dfs(cnt + 1);
+	for (int next = 0; next < N; next++) {
+		arr[cur] = next;
+		if (isValid(cur)) {
+			dfs(cur + 1);
 		}
 	}
 }
@@ -47,7 +49,7 @@ int main() {
 		cin >> N;
 
 		dfs(0);
-
+	
 		cout << "#" << tc + 1 << " " << ret << endl;
 	}
 
