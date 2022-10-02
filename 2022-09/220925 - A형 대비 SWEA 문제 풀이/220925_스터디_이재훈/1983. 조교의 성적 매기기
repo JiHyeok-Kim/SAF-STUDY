@@ -1,0 +1,63 @@
+#include <iostream>
+#include<algorithm>
+#include<queue>
+#include<vector>
+#include<string>
+using namespace std;
+struct node {
+	int id;
+	float score;
+	string s;
+};
+bool compare(node t, node v) {
+
+	return t.score > v.score;
+}
+vector<node>v;
+int main()
+{
+	ios::sync_with_stdio(false);
+	
+	//freopen_s(new FILE*, "input.txt", "r", stdin);
+	cin.tie();
+	cout.tie();
+	int T;
+	cin >> T;
+	for (int tc = 1; tc <= T; ++tc) {
+		int N, K;
+		cin >> N >> K;
+		v.clear();
+		for (int i = 1; i <= N; i++) {
+			int mid, final, subject;
+			cin >> mid >> final >> subject;
+
+			float result = mid * 0.35 + final * 0.45 + subject * 0.2;
+			v.push_back({ i,result,"A + " });
+
+		}
+
+		sort(v.begin(), v.end(),compare);
+
+		string jumsu[10] = { "A+","A0","A-","B+","B0","B-","C+","C0","C-","D0" };
+
+		int k = N / 10;
+		for (int i = 0; i < N; i = i + k) {
+			for (int j = i; j < i + k; j++) {
+				v[j].s = jumsu[i / k];
+			}
+		}
+
+		cout << "#" << tc << " ";
+		for (int i = 0; i < N; i++) {
+			if (v[i].id == K) {
+				cout << v[i].s<<"\n";
+			}
+		}
+
+
+
+	}
+
+	return 0;
+
+}
