@@ -1,0 +1,86 @@
+#include <iostream>
+#include <queue>
+#include<vector>
+#include<map>
+#include<string>
+using namespace std;
+vector<string>v;
+struct node {
+    string lot;
+    long long n;
+};
+queue<node>q;
+int check(string answer, string lo) {
+ 
+    for (int i = 0; i < 8; i++) {
+        if (answer[i] == '*')continue;
+ 
+        if (answer[i] != lo[i]) return 0;
+    }
+ 
+    return 1;
+ 
+ 
+ 
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    //freopen_s(new FILE*, "input.txt", "r", stdin);
+ 
+    int T;
+    cin >> T;
+ 
+    for (int cas = 1; cas <= T; cas++) {
+        cout << "#" << cas << " ";
+ 
+         
+ 
+        int N, M;
+        cin >> N >> M;
+ 
+        v.clear();
+        while (!q.empty()) {
+            q.pop();
+        }
+ 
+        for (int i = 0; i < N; i++) {
+            string lotto;
+            long long num;
+            cin >> lotto >> num;
+ 
+            q.push({ lotto,num });
+ 
+        }
+ 
+        for (int i = 0; i < M; i++) {
+            string mylotto;
+            cin >> mylotto;
+            v.push_back(mylotto);
+        }
+ 
+        long long  sum = 0;
+ 
+        while (!q.empty()) {
+ 
+            string loto = q.front().lot;
+            long long numb = q.front().n;
+            q.pop();
+ 
+            for (int b = 0; b < M; b++) {
+                if (check(loto, v[b]) == 1) {
+                    sum += numb;
+                }
+ 
+            }
+ 
+ 
+ 
+        }
+ 
+        cout << sum << "\n";
+ 
+    }
+}
