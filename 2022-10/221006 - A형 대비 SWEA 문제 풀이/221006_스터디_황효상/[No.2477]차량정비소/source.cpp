@@ -3,6 +3,7 @@
 #include <string>
 #include <queue>
 #include <algorithm>
+#include <memory.h>
 using namespace std;
 
 
@@ -27,16 +28,39 @@ bool operator<(Wait a, Wait b) {
 priority_queue<Wait> customer;
 queue<int> receptionCustomer;
 queue<int> repairCustomer;
-priority_queue<int,vector<int>,greater<int>> reception;
-priority_queue<int,vector<int>,greater<int>> repair;
+priority_queue<int, vector<int>, greater<int>> reception;
+priority_queue<int, vector<int>, greater<int>> repair;
 int C[10];
 int R[10];
 vector<int>cUsed[10];
 vector<int>rUsed[10];
 int T, N, M, K, A, B;
-int cnt = 0;
+
+bool checker[1001];
+
+void init() {
+	while (!customer.empty())
+		customer.pop();
+	while (!receptionCustomer.empty())
+		receptionCustomer.pop();
+	while (!repairCustomer.empty())
+		repairCustomer.pop();
+	while (!reception.empty())
+		reception.pop();
+	while (!repair.empty())
+		repair.pop();
+	memset(C, 0, sizeof(C));
+	memset(R, 0, sizeof(R));
+	for (int a = 0; a < 10; ++a) {
+		cUsed[a].clear();
+	}
+	for (int b = 0; b < 10; ++b) {
+		rUsed[b].clear();
+	}
+	memset(checker, 0, sizeof(checker));
+}
 void simul(int before, int time) {
-	
+
 	for (int a = before; a <= time; ++a) {
 		while (!customer.empty() && customer.top().time == a) {
 			Wait now = customer.top();
@@ -49,7 +73,6 @@ void simul(int before, int time) {
 			}
 			else {
 				repair.push(ID);
-				++cnt;
 			}
 		}
 		if (!reception.empty() && !receptionCustomer.empty()) {
@@ -84,10 +107,11 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
 	cout.tie(0);
-	freopen("Input.txt", "r", stdin);
+//	freopen("Input.txt", "r", stdin);
 
 	cin >> T;
 	for (int t = 1; t <= T; ++t) {
+		init();
 		cin >> N >> M >> K >> A >> B;
 		int before = 0;
 		for (int a = 1; a <= N; ++a) {
@@ -98,27 +122,28 @@ int main() {
 			repair.push(b);
 			cin >> R[b];
 		}
-		for (int a = 0; a < K; ++a) {
+		for (int a = 1; a <= K; ++a) {
 			int tmp;
 			cin >> tmp;
 			simul(before, tmp - 1);
 			receptionCustomer.push(a);
-			simul(tmp,tmp);
+			simul(tmp, tmp);
 			before = tmp;
 		}
-		simul(before, 50);
-		for (int a = 1; a <= N; ++a) {
-			for (int b = 0; b < cUsed[a].size(); ++b) {
-				cout << cUsed[a][b] << " ";
-			}
-			cout << "\n";
+		simul(before, 20000);
+		for (int a = 0; a < cUsed[A].size(); ++a) {
+			checker[cUsed[A][a]] = 1;
 		}
-		for (int a = 1; a <= M; ++a) {
-			for (int b = 0; b < rUsed[a].size(); ++b) {
-				cout << rUsed[a][b] << " ";
+		int ans = 0;
+		for (int a = 0; a < rUsed[B].size(); ++a) {
+			if (checker[rUsed[B][a]]) {
+				ans += rUsed[B][a];
 			}
-			cout << "\n";
 		}
+		if (ans == 0)
+			cout << "#" << t << " " << -1 << "\n";
+		else
+			cout << "#" << t << " " << ans << "\n";
 	}
 	return 0;
 }
