@@ -1,0 +1,331 @@
+#include <iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+#include<queue>
+#include<deque>
+#include<math.h>
+using namespace std;
+deque<int>dq1;
+deque<int>dq2;
+deque<int>dq3;
+deque<int>dq4;
+int K;
+void input()
+{
+    for (int i = 0; i < 8; i++) {
+        int a;
+        cin >> a;
+        dq1.push_back(a);
+    }
+    for (int i = 0; i < 8; i++) {
+        int b;
+        cin >> b;
+        dq2.push_back(b);
+    }
+    for (int i = 0; i < 8; i++) {
+        int c;
+        cin >> c;
+        dq3.push_back(c);
+    }
+    for (int i = 0; i < 8; i++) {
+        int d;
+        cin >> d;
+        dq4.push_back(d);
+    }
+}
+void init()
+{
+    while (!dq1.empty()) {
+        dq1.pop_back();
+        dq2.pop_back();
+        dq3.pop_back();
+        dq4.pop_back();
+    }
+  
+}
+int main()
+{
+    //freopen_s(new FILE*, "input.txt", "r",stdin);
+ 
+    int T;
+    cin >> T;
+ 
+    for (int cas = 1; cas <= T; cas++) {
+ 
+        cout << "#" << cas << " ";
+        cin >> K;
+        init();
+        input();
+ 
+        for (int i = 0; i < K; i++) {
+            int dq1_r = dq1[2];
+            int dq2_l = dq2[6];
+ 
+            int dq2_r = dq2[2];
+            int dq3_l = dq3[6];
+ 
+            int dq3_r = dq3[2];
+            int dq4_l = dq4[6];
+            int num, direc;
+            cin >> num >> direc;
+             
+            if (num == 1) {
+                if (direc == 1) {
+                      int temp = dq1.back();
+                      dq1.pop_back();
+                      dq1.push_front(temp);
+ 
+                      if (dq1_r != dq2_l) {
+                          int temp2 = dq2.front();
+                          dq2.pop_front();
+                          dq2.push_back(temp2);
+ 
+                          if (dq2_r != dq3_l) {
+                              int temp3 = dq3.back();
+                              dq3.pop_back();
+                              dq3.push_front(temp3);
+ 
+                              if (dq3_r != dq4_l) {
+                                  int temp4 = dq4.front();
+                                  dq4.pop_front();
+                                  dq4.push_back(temp4);
+ 
+                              }
+                          }
+ 
+                      }
+ 
+                }
+                else {
+                    int temp = dq1.front();
+                    dq1.pop_front();
+                    dq1.push_back(temp);
+                    if (dq1_r != dq2_l) {
+                        int temp2 = dq2.back();
+                        dq2.pop_back();
+                        dq2.push_front(temp2);
+                        if (dq2_r != dq3_l) {
+                            int temp3 = dq3.front();
+                            dq3.pop_front();
+                            dq3.push_back(temp3);
+ 
+                            if (dq3_r != dq4_l) {
+                                int temp4 = dq4.back();
+                                dq4.pop_back();
+                                dq4.push_front(temp4);
+ 
+                            }
+                        }
+ 
+                    }
+ 
+                }
+            }
+            if (num == 2) {
+                if (direc == 1) {
+                    int temp = dq2.back();
+                    dq2.pop_back();
+                    dq2.push_front(temp);
+ 
+                    if (dq2_r != dq3_l) {
+                        int temp2 = dq3.front();
+                        dq3.pop_front();
+                        dq3.push_back(temp2);
+ 
+                            if (dq3_r != dq4_l) {
+                                int temp4 = dq4.back();
+                                dq4.pop_back();
+                                dq4.push_front(temp4);
+ 
+                            }
+                        }
+                    if (dq2_l != dq1_r) {
+                        int temp3 = dq1.front();
+                        dq1.pop_front();
+                        dq1.push_back(temp3);
+ 
+                    }
+ 
+ 
+                }
+ 
+                else {
+ 
+                        int temp = dq2.front();
+                        dq2.pop_front();
+                        dq2.push_back(temp);
+ 
+                        if (dq2_r != dq3_l) {
+                            int temp2 = dq3.back();
+                            dq3.pop_back();
+                            dq3.push_front(temp2);
+ 
+ 
+ 
+                                if (dq3_r != dq4_l) {
+                                    int temp4 = dq4.front();
+                                    dq4.pop_front();
+                                    dq4.push_back(temp4);
+ 
+                                }
+                            }
+                        if (dq2_l != dq1_r) {
+                            int temp3 = dq1.back();
+                            dq1.pop_back();
+                            dq1.push_front(temp3);
+ 
+                        }
+ 
+ 
+ 
+ 
+ 
+                }
+            }
+            if (num == 3) {
+                if (direc == 1) {
+ 
+                    int temp = dq3.back();
+                    dq3.pop_back();
+                    dq3.push_front(temp);
+ 
+ 
+                        if (dq3_l != dq2_r) {
+                            int temp3 = dq2.front();
+                            dq2.pop_front();
+                            dq2.push_back(temp3);
+ 
+                            if (dq2_l != dq1_r) {
+ 
+                                int temp4 = dq1.back();
+                                dq1.pop_back();
+                                dq1.push_front(temp4);
+                            }
+                        }
+                        if (dq3_r != dq4_l) {
+                            int temp2 = dq4.front();
+                            dq4.pop_front();
+                            dq4.push_back(temp2);
+ 
+                    }
+ 
+ 
+                }
+                else {
+ 
+                    int temp = dq3.front();
+                    dq3.pop_front();
+                    dq3.push_back(temp);
+ 
+ 
+ 
+                        if (dq3_l != dq2_r) {
+                            int temp3 = dq2.back();
+                            dq2.pop_back();
+                            dq2.push_front(temp3);
+ 
+                            if (dq2_l != dq1_r) {
+ 
+                                int temp4 = dq1.front();
+                                dq1.pop_front();
+                                dq1.push_back(temp4);
+                            }
+                        }
+                        if (dq3_r != dq4_l) {
+                            int temp2 = dq4.back();
+                            dq4.pop_back();
+                            dq4.push_front(temp2);
+                    }
+ 
+                }
+            }
+            if (num == 4) {
+                if (direc == 1) {
+ 
+                        int temp = dq4.back();
+                        dq4.pop_back();
+                        dq4.push_front(temp);
+ 
+                        if (dq4_l != dq3_r) {
+                            int temp2 = dq3.front();
+                            dq3.pop_front();
+                            dq3.push_back(temp2);
+ 
+ 
+                            if (dq3_l != dq2_r) {
+ 
+                                int temp3 = dq2.back();
+                                dq2.pop_back();
+                                dq2.push_front(temp3);
+ 
+                                if (dq2_l != dq1_r) {
+ 
+                                    int temp4 = dq1.front();
+                                    dq1.pop_front();
+                                    dq1.push_back(temp4);
+                                }
+                            }
+                        }
+ 
+ 
+ 
+ 
+ 
+ 
+                }
+                else {
+                    int temp = dq4.front();
+                    dq4.pop_front();
+                    dq4.push_back(temp);
+ 
+                    if (dq4_l != dq3_r) {
+                        int temp2 = dq3.back();
+                        dq3.pop_back();
+                        dq3.push_front(temp2);
+ 
+ 
+                        if (dq3_l != dq2_r) {
+ 
+                            int temp3 = dq2.front();
+                            dq2.pop_front();
+                            dq2.push_back(temp3);
+ 
+                            if (dq2_l != dq1_r) {
+ 
+                                int temp4 = dq1.back();
+                                dq1.pop_back();
+                                dq1.push_front(temp4);
+                            }
+                        }
+                    }
+ 
+ 
+                }
+            }
+ 
+        }
+ 
+ 
+        int sum = 0;
+ 
+        if (dq1[0] == 1) {
+            sum += 1;
+        }
+        if (dq2[0] == 1) {
+            sum += 2;
+        }
+        if (dq3[0] == 1) {
+            sum += 4;
+        }
+        if (dq4[0] == 1) {
+            sum += 8;
+        }
+ 
+        cout << sum<<"\n";
+ 
+ 
+ 
+ 
+    }
+}

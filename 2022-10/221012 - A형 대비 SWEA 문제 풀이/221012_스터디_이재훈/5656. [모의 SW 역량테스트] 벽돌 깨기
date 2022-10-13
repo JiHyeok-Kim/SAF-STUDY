@@ -1,0 +1,145 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+int N, max_col, max_row;
+int map[20][20];
+int copymap[20][20];
+vector<int>path;
+int divx[] = { 0,0,-1,1 };
+int divy[] = { 1,-1,0,0 };
+int ans = 213456789;
+void init()
+{
+    for (int i = 0; i < max_row; i++) {
+        for (int j = 0; j < max_col; j++) {
+            cin >> map[i][j];
+        }
+    }
+}
+void init2()
+{
+    ans= 213456789;
+}
+void boom(int ro, int co)
+{
+    int lent = copymap[ro][co];
+    copymap[ro][co] = 0;
+    for (int mul = 1; mul < lent; mul++) {
+ 
+        for (int i = 0; i < 4; i++) {
+            int next_row = ro + divx[i]*mul;
+            int next_col = co + divy[i]*mul;
+            if (next_row < 0 || next_row >= max_row || next_col < 0 || next_col >= max_col)continue;
+            if (copymap[next_row][next_col] == 0)continue;
+            if (copymap[next_row][next_col] != 1)boom(next_row, next_col);
+            copymap[next_row][next_col] =0;
+ 
+        }
+ 
+    }
+ 
+ 
+}
+void gravity()
+{
+ 
+    for (int i = 0; i < max_col; i++) {
+        for (int k = max_row - 1; k >= 1; k--) {
+            if (copymap[k][i] == 0) {
+                for (int j = k - 1; j >= 0; j--) {
+                    if (copymap[j][i] != 0) {
+                        copymap[k][i] = copymap[j][i];
+                        copymap[j][i] = 0;
+                        break;
+                    }
+                }
+ 
+            }
+        }
+ 
+ 
+    }
+ 
+ 
+ 
+}
+int numb()
+{
+    int cnt = 0;
+    for (int i = 0; i < max_row; i++) {
+        for (int j = 0; j < max_col; j++) {
+            if (copymap[i][j] != 0)cnt++;
+        }
+    }
+ 
+    return cnt;
+}
+void copy()
+{
+    for (int i = 0; i < max_row; i++) {
+        for (int j = 0; j < max_col; j++) {
+            copymap[i][j] = map[i][j];
+        }
+    }
+}
+ 
+int simul()
+{
+    copy();
+    for (int i = 0; i < path.size(); i++) {
+ 
+        int now_col = path[i];
+ 
+        for (int j = 0; j < max_row; j++) {
+            if (copymap[j][now_col] != 0) {
+                boom(j, now_col);
+                gravity();
+                break;
+            }
+        }
+ 
+    }
+    int num =numb();
+    return num;
+ 
+}
+ 
+void dfs(int now)
+{
+    if (now >= N) {
+        int num = simul();
+        ans = min(num, ans);
+        return ;
+    }
+ 
+    for (int i = 0; i < max_col; i++) {
+        path.push_back(i);
+        dfs(now + 1);
+        path.pop_back();
+    }
+ 
+ 
+ 
+}
+ 
+int main()
+{
+    //freopen_s(new FILE*, "input.txt", "r",stdin);
+ 
+    int T;
+    cin >> T;
+ 
+ 
+    for (int cas = 1; cas <= T; cas++) {
+        cin >> N >> max_col >> max_row;
+        path.clear();
+ 
+        init();
+        copy();
+        init2();
+        dfs(0);
+ 
+        cout << "#" << cas << " ";
+        cout << ans <<"\n";
+    }
+}
