@@ -1,22 +1,35 @@
 #include <iostream>
 #include <cstring>
+#include <vector>
 using namespace std;
+
+struct Node {
+	int y;
+	int x;
+};
 
 int N, score, maxi;
 int map[100][100];
 int directY[4] = { -1,1,0,0 }; //상하좌우
 int directX[4] = { 0,0,-1,1 };
+vector<vector<Node>> portal;
 
 void init()
 {
 	//초기화
 	maxi = 0;
+	portal.clear();
+	vector<vector<Node>> temp(11);
+	portal = temp;
 	memset(map, 0, sizeof(map));
 
 	cin >> N;
 	for (int y = 0; y < N; y++) {
 		for (int x = 0; x < N; x++) {
 			cin >> map[y][x];
+			if (6 <= map[y][x] && map[y][x] <= 10) {
+				portal[map[y][x]].push_back({y, x});
+			}
 		}
 	}
 
@@ -61,13 +74,11 @@ void block(int idx, int* dt)
 
 void wormhole(int idx, int wy, int wx, int* py, int* px)
 {
-	for (int y = 0; y < N; y++){
-		for (int x = 0; x < N; x++) {
-			if (map[y][x] == idx && (y != wy || x != wx)) {
-				*py = y;
-				*px = x;
-				return;
-			}
+	for (int i = 0; i < 2; i++){
+		if (portal[idx][i].y != wy || portal[idx][i].x != wx) {
+			*py = portal[idx][i].y;
+			*px = portal[idx][i].x;
+			return;
 		}
 	}
 
@@ -88,7 +99,7 @@ void run(int y, int x)
 			px += directX[dt];
 			
 			if (py == y && px == x) break;
-			if (py < 0 || px < 0 || py >= N || px >= N) {
+			else if (py < 0 || px < 0 || py >= N || px >= N) {
 				if (dt == 0) dt = 1;
 				else if (dt == 1) dt = 0;
 				else if (dt == 2) dt = 3;
