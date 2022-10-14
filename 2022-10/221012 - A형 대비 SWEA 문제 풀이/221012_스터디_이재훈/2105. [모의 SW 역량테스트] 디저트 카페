@@ -1,0 +1,77 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+int N;
+int map[30][30];
+int visited[30][30];
+int ans = -1;
+int divx[] = { 1,1,-1,-1 };
+int divy[] = { -1,1,1,-1 };
+int DAT[101];
+struct node {
+    int row;
+    int col;
+};
+void input() {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            cin >> map[i][j];
+        }
+    }
+}
+void dfs(node st, int cnt, node now)
+{
+    if (now.row == st.row && now.col == st.col && visited[now.row][now.col]) {
+        ans = max(ans, visited[now.row][now.col]);
+        return;
+    }
+    for (int i = 0; i < 2; i++) {
+ 
+        int next_row = now.row + divx[cnt + i];
+        int next_col = now.col + divy[cnt + i];
+ 
+        if (next_row < 0 || next_row >= N || next_col < 0 || next_col >= N)continue;
+        if (cnt + i >= 4)continue;
+        if (DAT[map[next_row][next_col]]!=0)continue;
+        if (visited[next_row][next_col] == 0)
+        {
+            visited[next_row][next_col] = visited[now.row][now.col] + 1;
+            DAT[map[next_row][next_col]]++;
+ 
+            dfs(st, cnt + i, { next_row,next_col });
+            visited[next_row][next_col] = 0;
+            DAT[map[next_row][next_col]] = 0;
+        }
+ 
+    }
+ 
+ 
+ 
+ 
+ 
+}
+int solution() {
+    ans = -1;
+    for (int row = 0; row < N; row++) {
+        for (int col = 0; col < N; col++) {
+            node st = { row,col };
+            dfs(st, 0, st);
+        }
+    }
+    return ans;
+ 
+}
+int main()
+{
+    //freopen_s(new FILE*, "input.txt", "r",stdin);
+    int T;
+    cin >> T;
+    for (int cas = 1; cas <= T; cas++) {
+ 
+        cin >> N;
+        input();
+        cout <<"#" <<cas << " " <<solution()<<"\n";
+ 
+    }
+ 
+}

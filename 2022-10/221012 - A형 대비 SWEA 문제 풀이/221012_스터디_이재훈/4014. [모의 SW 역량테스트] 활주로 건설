@@ -1,0 +1,129 @@
+#include <iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+#include<queue>
+#include<deque>
+#include<math.h>
+#include<unordered_set>
+using namespace std;
+int N,X;
+int map[21][21];
+int used[21][21];
+void input()
+{
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            cin >> map[i][j];
+        }
+    }
+}
+void init()
+{
+    for(int i = 0; i < 21; i++) {
+        for (int j = 0; j < 21; j++) {
+            used[i][j] = 0;
+        }
+    }
+}
+int main()
+{
+    //freopen_s(new FILE*, "input.txt", "r", stdin);
+    int T;
+    cin >> T;
+
+    for (int cas = 1; cas <= T; cas++) {
+        cin >> N >> X;
+        init();
+        input();
+        int cnt = 0;
+        for (int row = 0; row < N; row++) {
+
+            int a = map[row][0];
+            int col = 1;
+            while (1) {
+                if (col == N) {
+                    cnt++;
+                    break;
+                }
+
+                if (map[row][col] > a) {
+                    if (map[row][col] != a + 1)break;
+                    int flag = 0;
+                    if (col - X < 0)break;
+                    for (int i = col - X; i <= col - 1; i++) {
+                        if (used[row][i] == 1)flag = 1;
+                        if (map[row][i] != a)flag = 1;
+                        used[row][i] = 1;
+                    }
+                    if (flag == 1)break;
+                    a = map[row][col];
+                }
+
+
+                if (map[row][col] < a) {
+                    if (map[row][col]+1 != a )break;
+                    int flag = 0;
+                    if (col + X > N)break;
+                    for (int i = col; i < col + X; i++) {
+                        if (used[row][i] == 1)flag = 1;
+                        if (map[row][i] != a - 1)flag = 1;
+                        used[row][i] = 1;
+                    }
+                    if (flag == 1)break;
+                    a = map[row][col];
+                }
+                col++;
+
+
+            }
+
+        }
+        init();
+        for (int col = 0; col < N; col++) {
+
+            int a = map[0][col];
+            int row = 1;
+            while (1) {
+                if (row == N) {
+                    cnt++;
+                    break;
+                }
+
+                if (map[row][col] > a) {
+                    if (map[row][col] != a + 1)break;
+                    int flag = 0;
+                    if (row - X < 0)break;
+                    for (int i = row - X; i <= row - 1; i++) {
+                        if (used[i][col] == 1)flag = 1;
+                        if (map[i][col] != a)flag = 1;
+                        used[i][col] = 1;
+                    }
+                    if (flag == 1)break;
+                    a = map[row][col];
+                }
+
+
+                if (map[row][col] < a) {
+                    if (map[row][col] + 1 != a)break;
+                    int flag = 0;
+                    if (row + X > N)break;
+                    for (int i = row; i < row + X; i++) {
+                        if (used[i][col] == 1)flag = 1;
+                        if (map[i][col] != a - 1)flag = 1;
+                        used[i][col] = 1;
+                    }
+                    if (flag == 1)break;
+                    a = map[row][col];
+                }
+                row++;
+
+
+            }
+
+        }
+        cout << "#" <<cas << " " <<cnt<<"\n";
+
+    }
+
+}
