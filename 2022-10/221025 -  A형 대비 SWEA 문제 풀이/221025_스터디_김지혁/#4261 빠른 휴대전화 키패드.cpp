@@ -50,7 +50,7 @@ void init()
 
 int main()
 {
-	freopen_s(new FILE*, "input.txt", "r", stdin);
+	//freopen_s(new FILE*, "input.txt", "r", stdin);
 	cin.tie(0);
 	cout.tie(0);
 	ios::sync_with_stdio(false);
