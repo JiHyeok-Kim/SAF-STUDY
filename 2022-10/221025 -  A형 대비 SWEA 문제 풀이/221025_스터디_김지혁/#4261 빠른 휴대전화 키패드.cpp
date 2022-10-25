@@ -16,7 +16,6 @@ void input()
 		int n = idx / 3;
 		um[ch] = n;
 	}
-	um['z'] = 9;
 
 	return;
 }
