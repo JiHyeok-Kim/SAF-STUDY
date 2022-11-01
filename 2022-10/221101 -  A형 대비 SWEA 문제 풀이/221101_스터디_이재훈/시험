@@ -1,0 +1,39 @@
+T=int(input())
+
+for cas in range(1,T+1):
+
+
+    n,t,p=map(int,input().split())
+    data = [[] for _ in range(n)]
+    dat=[0]*t
+    for i in range(1,n+1):
+
+        exam=list(map(int,input().split()))
+        data[i-1].append(exam)
+        data[i - 1].append(i)
+        data[i-1].append(exam.count(1))
+        for j in range(t):
+            if exam[j] ==1:
+                dat[j]=dat[j]+1
+
+    for i in range(t):
+        dat[i] = n-dat[i]
+
+    for i in data:
+        mul=0
+        for j in range(len(i[0])):
+            mul+=(dat[j] * i[0][j])
+
+        i.append(mul)
+
+    for i in range(n):
+        del data[i][0]
+
+    data= sorted(data,key=lambda x : (-x[2],-x[1],x[0]))
+    print("#",end="")
+    print(cas,end=" ")
+    for i in range(n):
+        if data[i][0] == p:
+            print(data[i][2],i+1,end=" ")
+
+    print()
