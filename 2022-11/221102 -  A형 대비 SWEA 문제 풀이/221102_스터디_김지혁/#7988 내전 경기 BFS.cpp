@@ -59,7 +59,6 @@ void BFS(string start)
 
 void solve()
 {
-	int idx = -1;
 	for (auto &i : um) {
 		if(visited[i.first] == 0){
 			BFS(i.first);
