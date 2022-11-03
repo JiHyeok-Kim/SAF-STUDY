@@ -1,0 +1,19 @@
+t=int(input())
+for cas in range(1,t+1):
+    data=set()
+    n=int(input())
+    for i in range(n):
+        data.add(input())
+ 
+    size= len(data)
+    data=list(data)
+ 
+    answer=[]
+    for i in range(size):
+        answer.append((data[i],len(data[i])))
+ 
+    answer=sorted(answer,key=lambda x: (x[1],x[0]))
+    print("#",end="")
+    print(cas)
+    for i in range(len(answer)):
+        print(answer[i][0])
