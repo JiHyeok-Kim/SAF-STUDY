@@ -1,0 +1,37 @@
+# import sys
+# sys.stdin = open('input.in','r')
+ 
+T= int(input())
+ans = dict()
+ 
+ans[2]=['a','b','c']
+ans[3]=['d','e','f']
+ans[4]=['g','h','i']
+ans[5]=['j','k','l']
+ans[6]=['m','n','o']
+ans[7]=['p','q','r','s']
+ans[8]=['t','u','v']
+ans[9]=['w','x','y','z']
+ 
+ 
+for case in range(1,T+1):
+    print("#",end="")
+    print(case,end=" ")
+ 
+    put,n = input().split()
+ 
+    data=input().split()
+ 
+    same_cnt=0
+    for word in data:
+        cnt=0;
+        for i in range(len(word)):
+            if word[i] in ans[int(put[i])]:
+                cnt = cnt+1
+            else:
+                break;
+ 
+        if cnt == len(put):
+            same_cnt=same_cnt+1
+ 
+    print(same_cnt)

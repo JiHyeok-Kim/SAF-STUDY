@@ -1,0 +1,19 @@
+t=int(input())
+ 
+for cas in range(1,t+1):
+    a,b=map(int,input().split())
+    both=a+b
+    answer=set()
+ 
+    alist=list(input().split())
+    blist = list(input().split())
+ 
+    for i in alist:
+        answer.add(i)
+ 
+    for j in blist:
+        answer.add(j)
+ 
+    print("#",end="")
+    print(cas,end=" ")
+    print(both-len(answer))
