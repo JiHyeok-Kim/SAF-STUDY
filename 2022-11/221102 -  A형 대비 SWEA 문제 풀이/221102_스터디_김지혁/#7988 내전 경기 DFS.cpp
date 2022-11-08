@@ -51,7 +51,6 @@ void DFS(string now)
 
 void solve()
 {
-	int idx = -1;
 	for (auto &i : um) {
 		if (visited[i.first] == 0) {
 			DFS(i.first);
