@@ -4,52 +4,33 @@
 using namespace std;
 
 int N;
-int hv[100];
-int lt[100];
+int arr[100];
 
 void init()
 {
 	cin >> N;
-	for (int i = 0; i < N; i++) {
-		cin >> hv[i];
-		lt[i] = hv[i];
-	}
+	for (int i = 0; i < N; i++)
+		cin >> arr[i];
 
-	sort(hv, hv + N, greater<int>());
-	sort(lt, lt + N);
+	sort(arr, arr + N, greater<int>());
 	return;
 }
 
 int solve()
 {
-	int flag = 0;
-	int idxh, idxl, cnt;
+	int idx, add, cnt;
 	cnt = 0;
-	idxh = idxl = -1;
-	while (1)
+	idx = add = -1;
+	while (idx + add + 2 < N)
 	{
-		if (idxh + 1 + idxl + 1 == N) break;
-		else if (idxh + 1 + idxl + 1 > N) {
-			flag = 1;
-			break;
+		if (arr[++idx] < 50) {
+			int num = ceil(50 / float(arr[idx]));
+			add += --num;
 		}
-		idxh++;
-		if (hv[idxh] >= 50) {
-			cnt++;
-			continue;
-		}
-		else {
-			float n = hv[idxh];
-			int num = ceil(50 / n);
-			num--;
-			idxl += num;
-			cnt++;
-		}
-	}
-	if (flag == 1) {
-		cnt--;
+		cnt++;
 	}
 
+	if (idx + add + 2 > N) cnt--;
 	return cnt;
 }
 
@@ -62,7 +43,7 @@ int main()
 
 	int T;
 	cin >> T;
-	for (int tc = 1; tc <= T; tc++) 
+	for (int tc = 1; tc <= T; tc++)
 	{
 		init();
 		cout << "#" << tc << " " << solve() << "\n";
