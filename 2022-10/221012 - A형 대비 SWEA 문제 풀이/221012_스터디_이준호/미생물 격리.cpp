@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 int N, T, K, ans;
@@ -34,44 +35,38 @@ void move_turn() {
 	}
 }
 
-
-void hap() {
-	int cnt[100][100] = { 0 };
-	int maxCnt[100][100] = { 0 };
-	int direct[100][100] = { 0 };
-	for (int i = 0; i < tong.size(); i++) {
-		if (tong[i].cnt == 0)continue;
-		int row = tong[i].y;
-		int col = tong[i].x;
-		cnt[row][col] += tong[i].cnt;
-		if (maxCnt[row][col] < tong[i].cnt) {
-			direct[row][col] = tong[i].dr;
-			maxCnt[row][col] = tong[i].cnt;
-		}
-	}
-
-	vector<Node> tmp;
-	for (int row = 0; row < N; row++) {
-		for (int col = 0; col < N; col++) {
-			if (cnt[row][col] == 0) continue;
-			tmp.push_back({ row,col,cnt[row][col],direct[row][col] });
-		}
-	}
-	tong = tmp; // vector 복사하기  
+bool cmp(Node t, Node v) {
+	if (t.y != v.y) return t.y < v.y;
+	if (t.x != v.x) return t.x < v.x;
+	return t.cnt > v.cnt;
 }
 
-
+void hap() {
+	vector<Node> tmpTong;
+	tmpTong.push_back(tong[0]);
+	int idx = 0;
+	for (int i = 1; i < tong.size(); i++) {
+		if (tong[idx].y == tong[i].y && tong[idx].x == tong[i].x) {
+			tmpTong.back().cnt += tong[i].cnt;
+		}
+		else {
+			idx = i;
+			tmpTong.push_back(tong[idx]);
+		}
+	}
+	tong = tmpTong;
+}
 
 void solve() {
 	for (int i = 0; i < T; i++) {
 		move_turn();
+		sort(tong.begin(), tong.end(), cmp);
 		hap();
 	}
 	for (int i = 0; i < tong.size(); i++) {
 		ans += tong[i].cnt;
 	}
 }
-
 
 int main()
 {
@@ -86,6 +81,5 @@ int main()
 		solve();
 		cout << "#" << tc << " " << ans << "\n";
 	}
-
 	return 0;
 }
